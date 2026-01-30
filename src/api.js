@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BLOG_API_URL,
-  timeout: 10000,
+  timeout: 120000,
   headers: {
     'Content-Type': 'application/json'
   }
