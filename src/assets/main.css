@@ -1,256 +1,251 @@
-/* Custom CSS for Blog Application */
+/* Custom CSS for Blog Application - Facebook Inspired Redesign */
 
-/* Global styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --primary-color: #0d6efd;
-  --secondary-color: #6c757d;
-  --success-color: #198754;
-  --danger-color: #dc3545;
-  --warning-color: #ffc107;
-  --info-color: #0dcaf0;
-  --light-color: #f8f9fa;
-  --dark-color: #212529;
-  --border-radius: 0.375rem;
-  --box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  --transition: all 0.3s ease;
+  --fb-blue: #0866ff;
+  --fb-bg: #f0f2f5;
+  --fb-card-bg: #ffffff;
+  --fb-text-primary: #1c1e21;
+  --fb-text-secondary: #65676b;
+  --fb-divider: #ebedf0;
+  --fb-border-radius: 8px;
+  --fb-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s ease;
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  background-color: var(--fb-bg);
+  color: var(--fb-text-primary);
+  line-height: 1.5;
   min-height: 100vh;
 }
 
 /* Card enhancements */
 .card {
   border: none;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+  border-radius: var(--fb-border-radius);
+  box-shadow: var(--fb-shadow);
+  background-color: var(--fb-card-bg);
   transition: var(--transition);
-  overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  background: linear-gradient(135deg, var(--primary-color), #0056b3);
-  color: white;
-  border-bottom: none;
+  background-color: var(--fb-card-bg);
+  border-bottom: 1px solid var(--fb-divider);
+  padding: 12px 16px;
   font-weight: 600;
+  color: var(--fb-text-primary);
 }
 
 /* Button enhancements */
 .btn {
-  border-radius: var(--border-radius);
-  font-weight: 500;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 8px 16px;
   transition: var(--transition);
   border: none;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: left 0.3s ease;
-}
-
-.btn:hover::before {
-  left: 100%;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-color), #0056b3);
+  background-color: var(--fb-blue);
+  color: white;
 }
 
-.btn-success {
-  background: linear-gradient(135deg, var(--success-color), #146c43);
+.btn-primary:hover {
+  background-color: #075ce4;
 }
 
-.btn-danger {
-  background: linear-gradient(135deg, var(--danger-color), #b02a37);
+.btn-secondary {
+  background-color: #e4e6eb;
+  color: #050505;
 }
 
-.btn-warning {
-  background: linear-gradient(135deg, var(--warning-color), #d39e00);
+.btn-secondary:hover {
+  background-color: #d8dadf;
+}
+
+.btn-outline-primary {
+  color: var(--fb-blue);
+  border: 1px solid var(--fb-blue);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background: rgba(8, 102, 255, 0.05);
+  color: var(--fb-blue);
 }
 
 /* Form enhancements */
 .form-control {
-  border-radius: var(--border-radius);
-  border: 1px solid #dee2e6;
+  background-color: #f0f2f5;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 12px;
   transition: var(--transition);
 }
 
 .form-control:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  background-color: white;
+  border-color: var(--fb-blue);
+  box-shadow: 0 0 0 2px rgba(8, 102, 255, 0.2);
+  outline: none;
 }
 
 .form-label {
   font-weight: 600;
-  color: var(--dark-color);
-  margin-bottom: 0.5rem;
+  color: var(--fb-text-secondary);
+  font-size: 0.8125rem;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* Navbar enhancements */
 .navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  background-color: var(--fb-card-bg) !important;
+  box-shadow: var(--fb-shadow);
+  padding: 0;
+  height: 56px;
 }
 
 .navbar-brand {
   font-weight: 700;
   font-size: 1.5rem;
+  color: var(--fb-blue) !important;
   letter-spacing: -0.5px;
 }
 
 .nav-link {
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--fb-text-secondary) !important;
+  padding: 1rem 1.25rem !important;
   transition: var(--transition);
-  position: relative;
+  border-bottom: 3px solid transparent;
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: var(--transition);
-  transform: translateX(-50%);
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--fb-text-primary) !important;
+  border-radius: 8px;
 }
 
-.nav-link:hover::after {
-  width: 80%;
+.nav-link.active {
+  color: var(--fb-blue) !important;
+  border-bottom-color: var(--fb-blue);
+  border-radius: 0;
 }
 
 /* Post content styling */
 .post-content {
-  line-height: 1.8;
-  color: #444;
+  line-height: 1.6;
+  color: var(--fb-text-primary);
+  font-size: 0.9375rem;
 }
 
 .post-content h1,
 .post-content h2,
-.post-content h3,
-.post-content h4,
-.post-content h5,
-.post-content h6 {
+.post-content h3 {
+  font-weight: 700;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
+}
+
+/* Badge enhancements */
+.badge {
   font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
-.post-content p {
-  margin-bottom: 1rem;
+/* Table enhancements */
+.table {
+  background: white;
+  border-radius: var(--fb-border-radius);
 }
 
-.post-content ul,
-.post-content ol {
-  margin-bottom: 1rem;
-  padding-left: 2rem;
+.table thead th {
+  background-color: #f8f9fa;
+  color: var(--fb-text-secondary);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--fb-divider);
 }
 
-.post-content blockquote {
-  border-left: 4px solid var(--primary-color);
-  padding-left: 1rem;
-  margin: 1rem 0;
-  font-style: italic;
-  color: #666;
+/* Footer enhancements */
+footer {
+  background-color: var(--fb-card-bg) !important;
+  border-top: 1px solid var(--fb-divider);
+  color: var(--fb-text-secondary) !important;
 }
 
-/* Loading states */
-.loading-spinner {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+footer a {
+  color: var(--fb-text-secondary);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Custom classes for post layout */
+.fb-post-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.fb-avatar {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
+  margin-right: 12px;
+  object-fit: cover;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.fb-avatar-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  background-color: #e4e6eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-/* Toast notifications */
-.toast-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1050;
+.fb-avatar-container i {
+  font-size: 1.25rem;
+  color: var(--fb-text-secondary);
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 15px;
-  }
-  
-  .card {
-    margin-bottom: 1rem;
-  }
-  
-  .btn {
-    font-size: 0.9rem;
-  }
-  
-  .navbar-brand {
-    font-size: 1.2rem;
-  }
+.fb-post-author {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin: 0;
 }
 
-@media (max-width: 576px) {
-  .post-content {
-    font-size: 0.95rem;
-  }
-  
-  .card-body {
-    padding: 1rem;
-  }
-  
-  .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-  }
-}
-
-/* Animation classes */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s ease;
-}
-
-.slide-enter-from {
-  transform: translateX(-100%);
-}
-
-.slide-leave-to {
-  transform: translateX(100%);
+.fb-post-date {
+  font-size: 0.8125rem;
+  color: var(--fb-text-secondary);
+  margin: 0;
 }
 
 /* Custom scrollbar */
@@ -259,101 +254,25 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--primary-color), #0056b3);
-  border-radius: 4px;
+  background: #bcc0c4;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #0056b3, var(--primary-color));
+  background: #8d949e;
 }
 
-/* Utility classes */
-.text-gradient {
-  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* View transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
 }
 
-.shadow-hover {
-  transition: var(--transition);
-}
-
-.shadow-hover:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
-
-/* Badge enhancements */
-.badge {
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.375rem 0.75rem;
-  border-radius: 50rem;
-}
-
-/* Table enhancements */
-.table {
-  background: white;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-}
-
-.table thead th {
-  background: linear-gradient(135deg, var(--primary-color), #0056b3);
-  color: white;
-  border: none;
-  font-weight: 600;
-}
-
-.table tbody tr:hover {
-  background-color: rgba(13, 110, 253, 0.05);
-}
-
-/* Footer enhancements */
-footer {
-  background: linear-gradient(135deg, var(--dark-color), #343a40);
-  color: white;
-}
-
-footer a {
-  color: #adb5bd;
-  transition: var(--transition);
-}
-
-footer a:hover {
-  color: white;
-  transform: translateX(3px);
-  display: inline-block;
-}
-
-/* Alert enhancements */
-.alert {
-  border: none;
-  border-radius: var(--border-radius);
-  font-weight: 500;
-}
-
-.alert-success {
-  background: linear-gradient(135deg, rgba(25, 135, 84, 0.1), rgba(25, 135, 84, 0.05));
-  color: var(--success-color);
-}
-
-.alert-danger {
-  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05));
-  color: var(--danger-color);
-}
-
-.alert-warning {
-  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05));
-  color: var(--warning-color);
-}
-
-.alert-info {
-  background: linear-gradient(135deg, rgba(13, 202, 240, 0.1), rgba(13, 202, 240, 0.05));
-  color: var(--info-color);
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

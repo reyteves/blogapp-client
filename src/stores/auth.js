@@ -23,20 +23,33 @@ export const useAuthStore = defineStore('auth', {
     async register(userData) {
       this.isLoading = true
       try {
+        console.log('Sending registration payload:', userData)
         const response = await api.post('/users/register', userData)
-        const { token, user } = response.data
+        const { token, access, user } = response.data
+        const finalToken = token || access
         
-        this.token = token
-        this.user = user
-        localStorage.setItem('token', token)
-        localStorage.setItem('user', JSON.stringify(user))
-        
-        return { success: true }
-      } catch (error) {
-        return { 
-          success: false, 
-          message: error.response?.data?.message || 'Registration failed' 
+        if (finalToken) {
+          this.token = finalToken
+          this.user = user
+          localStorage.setItem('token', finalToken)
+          localStorage.setItem('user', JSON.stringify(user))
+          return { success: true, loggedIn: true }
         }
+        
+        return { success: true, loggedIn: false }
+      } catch (error) {
+        console.error('Registration error details:', error.response?.data || error)
+        
+        let message = 'Registration failed'
+        const serverError = error.response?.data
+        
+        if (serverError?.error?.code === 11000) {
+          message = 'Username or Email already exists. Please try a different one.'
+        } else if (serverError?.message) {
+          message = serverError.message
+        }
+        
+        return { success: false, message }
       } finally {
         this.isLoading = false
       }

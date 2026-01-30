@@ -1,27 +1,78 @@
 <template>
-  <div class="card h-100">
-    <div class="card-body">
-      <h5 class="card-title">{{ post.title }}</h5>
-      <p class="card-text text-muted small">
-        By {{ post.author?.username || 'Unknown' }} 
-        on {{ formatDate(post.creationDate) }}
-      </p>
-      <div class="card-text" v-html="truncateContent(post.content)"></div>
-    </div>
-    <div class="card-footer bg-transparent">
-      <div class="d-flex justify-content-between align-items-center">
-        <router-link :to="`/post/${post._id}`" class="btn btn-outline-primary btn-sm">
-          Read More
-        </router-link>
-        <div v-if="canEditPost">
-          <router-link :to="`/edit-post/${post._id}`" class="btn btn-outline-secondary btn-sm me-2">
-            <i class="bi bi-pencil"></i>
-          </router-link>
-          <button @click="deletePost" class="btn btn-outline-danger btn-sm">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
+  <div class="card card-fb">
+    <!-- Header -->
+    <div class="fb-post-header">
+      <div class="fb-avatar-container">
+        <i
+          :class="
+            post.author?.role === 'admin' ||
+            post.author?.isAdmin ||
+            post.author?.email === 'admin@example.com'
+              ? 'bi bi-gear-fill'
+              : 'bi bi-chat'
+          "
+        ></i>
       </div>
+      <div class="flex-grow-1">
+        <p class="fb-post-author d-flex align-items-center">
+          {{ post.author?.username || 'Unknown' }}
+          <span
+            v-if="post.author?.role === 'admin' || post.author?.isAdmin || post.author?.email === 'admin@example.com'"
+            class="badge bg-danger ms-2"
+            style="font-size: 0.65rem"
+            >ADMIN</span
+          >
+        </p>
+        <p class="fb-post-date">
+          {{ formatDate(post.creationDate) }} · <i class="bi bi-globe-americas"></i>
+        </p>
+      </div>
+      <!-- Edit/Delete Actions for Owners/Admins -->
+      <div v-if="canEditPost" class="dropdown">
+        <button
+          class="btn btn-fb-secondary btn-sm rounded-circle px-2"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          <i class="bi bi-three-dots"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow">
+          <li>
+            <router-link :to="`/edit-post/${post._id}`" class="dropdown-item py-2">
+              <i class="bi bi-pencil me-2"></i>Edit Post
+            </router-link>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <button @click="deletePost" class="dropdown-item py-2 text-danger">
+              <i class="bi bi-trash me-2"></i>Delete Post
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="card-fb-body p-3 pt-0">
+      <h5 class="fw-bold mb-2">{{ post.title }}</h5>
+      <div class="post-content text-dark" v-html="truncateContent(post.content)"></div>
+      <div v-if="post.tags && post.tags.length" class="mt-2">
+        <span v-for="tag in post.tags" :key="tag" class="text-primary small me-2">#{{ tag }}</span>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="border-top mx-3"></div>
+    <div class="d-flex justify-content-around p-1">
+      <router-link :to="`/post/${post._id}`" class="btn btn-fb-action">
+        <i class="bi bi-eye"></i> <span>View</span>
+      </router-link>
+      <router-link
+        :to="{ path: `/post/${post._id}`, query: { focus: 'true' } }"
+        class="btn btn-fb-action"
+      >
+        <i class="bi bi-chat"></i> <span>Comment</span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -37,8 +88,8 @@ export default {
   props: {
     post: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const router = useRouter()
@@ -49,7 +100,9 @@ export default {
 
     const canEditPost = computed(() => {
       if (!authStore.isAuthenticated) return false
-      return authStore.currentUser?.id === props.post.author?._id || authStore.currentUser?._id === props.post.author?._id || authStore.isAdmin
+      const currentUserId = authStore.currentUser?.id || authStore.currentUser?._id
+      const postAuthorId = props.post.author?._id || props.post.author
+      return currentUserId === postAuthorId || authStore.isAdmin
     })
 
     const formatDate = (dateString) => {
@@ -59,14 +112,14 @@ export default {
       return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
       })
     }
 
     const truncateContent = (content) => {
       if (!content) return ''
       const plainText = content.replace(/<[^>]*>/g, '')
-      return plainText.length > 150 ? plainText.substring(0, 150) + '...' : plainText
+      return plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText
     }
 
     const deletePost = async () => {
@@ -77,13 +130,13 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, delete it!',
       })
 
       if (result.isConfirmed) {
         try {
           const deleteResult = await postsStore.deletePost(props.post._id)
-          
+
           if (deleteResult.success) {
             await Swal.fire({
               icon: 'success',
@@ -92,7 +145,7 @@ export default {
               toast: true,
               position: 'top-end',
               showConfirmButton: false,
-              timer: 3000
+              timer: 3000,
             })
             // Refresh the posts list after deletion
             await postsStore.fetchPosts()
@@ -105,7 +158,7 @@ export default {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3000
+            timer: 3000,
           })
         }
       }
@@ -116,8 +169,37 @@ export default {
       canEditPost,
       formatDate,
       truncateContent,
-      deletePost
+      deletePost,
     }
-  }
+  },
 }
 </script>
+
+<style scoped>
+.btn-fb-action {
+  flex: 1;
+  background: transparent;
+  color: var(--fb-text-secondary);
+  border-radius: 4px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-fb-action:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--fb-text-secondary);
+}
+
+.fb-post-date {
+  line-height: 1;
+}
+
+.dropdown-menu {
+  border: none;
+}
+</style>

@@ -2,7 +2,9 @@
   <div id="app">
     <Navbar />
     <main class="main-content">
-      <router-view />
+      <div class="main-container">
+        <router-view />
+      </div>
     </main>
     <Footer />
   </div>
@@ -18,7 +20,7 @@ export default {
   name: 'App',
   components: {
     Navbar,
-    Footer
+    Footer,
   },
   setup() {
     const authStore = useAuthStore()
@@ -29,9 +31,9 @@ export default {
     })
 
     return {
-      authStore
+      authStore,
     }
-  }
+  },
 }
 </script>
 
@@ -44,41 +46,16 @@ export default {
 
 .main-content {
   flex: 1;
-  padding-top: 1rem;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }
 
-/* Global styles */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+/* Container for centered content like Facebook feed */
+.main-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
-/* Custom animations */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+/* Global scrollbar styling is now in main.css */
 </style>
